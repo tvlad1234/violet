@@ -2,10 +2,10 @@
 
 module rx #(parameter OVERSAMP = 16, parameter BAUD_DIV = 2)
   (
-    input i_clk,
-    input i_rst,
-    input i_rx,
-    input i_ack,
+    input wire i_clk,
+    input wire i_rst,
+    input wire i_rx,
+    input wire i_ack,
     output reg [7:0] o_data,
     output reg o_err,
     output reg o_avail

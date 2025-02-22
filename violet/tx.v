@@ -2,10 +2,10 @@
 
 module tx #(parameter BAUD_DIV = 217)
   (
-    input i_clk,
-    input i_rst,
-    input i_go,
-    input [7:0] i_data,
+    input wire i_clk,
+    input wire i_rst,
+    input wire i_go,
+    input wire [7:0] i_data,
     output reg o_tx,
     output reg o_ready
   );

@@ -2,13 +2,13 @@
 
 module command_rx #(parameter BAUD_DIV = 128)
   (
-    input i_clk,
-    input rst,
-    input uart_rx,
+    input wire i_clk,
+    input wire rst,
+    input wire uart_rx,
 
     output reg cmd_en,
     output reg [7:0] cmd_addr,
-    output reg [16:0] cmd_data
+    output reg [15:0] cmd_data
   );
 
   wire rx_err, rx_avail;

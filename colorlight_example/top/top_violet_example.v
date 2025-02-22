@@ -13,11 +13,11 @@
 `default_nettype none
 
 module top_violet_example(
-    input i_clk,
-    input nrst,
+    input wire i_clk,
+    input wire nrst,
 
-    input uart_rx,
-    output uart_tx
+    input wire uart_rx,
+    output wire uart_tx
   );
 
   reg rst;

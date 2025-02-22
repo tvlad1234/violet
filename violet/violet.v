@@ -2,14 +2,14 @@
 
 module violet #(parameter BAUD_DIV=128)
   (
-    input i_clk,
-    input rst,
+    input wire i_clk,
+    input wire rst,
 
-    input [15:0] leds,
+    input wire [15:0] leds,
     output reg [15:0] buttons,
 
-    input uart_rx,
-    output uart_tx
+    input wire uart_rx,
+    output wire uart_tx
   );
 
   reg [15:0] out_reg;
