@@ -1,0 +1,5 @@
+.vscode/
+colorlight_example/*.svf
+colorlight_example/*.bit
+colorlight_example/*.config
+colorlight_example/*.json
