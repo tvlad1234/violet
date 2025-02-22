@@ -1,8 +1,21 @@
-html, body {
+@font-face {
+  font-family: 'DSEG7Classic-Regular';
+  src: url(DSEG7Classic-Regular.ttf);
+}
+
+html,
+body {
   margin: 0;
   padding: 0;
+  background-color: #1f1f1f;
 }
 
 canvas {
   display: block;
+}
+
+.sevseg {
+  font-family: 'DSEG7Classic-Regular';
+  font-size: 45px;
+  color: #f20000
 }

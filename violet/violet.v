@@ -6,13 +6,14 @@ module violet #(parameter BAUD_DIV=128)
     input wire rst,
 
     input wire [15:0] leds,
+    input wire [15:0] display,
     output reg [15:0] buttons,
 
     input wire uart_rx,
     output wire uart_tx
   );
 
-  reg [15:0] out_reg;
+  reg [15:0] requested_reg, out_reg;
   reg [7:0] tx_data;
   wire tx_ready;
   reg tx_go;
@@ -20,6 +21,7 @@ module violet #(parameter BAUD_DIV=128)
   tx #(.BAUD_DIV(BAUD_DIV)) u_tx(i_clk, rst, tx_go, tx_data, uart_tx, tx_ready);
 
   localparam cmd_leds = 8'd1;
+  localparam cmd_display = 8'd3;
   localparam cmd_btn = 8'd2;
 
   wire cmd_en; // command enable
@@ -37,10 +39,28 @@ module violet #(parameter BAUD_DIV=128)
     begin
       if (cmd_en)
       begin
-        if(cmd_addr == cmd_leds)
-          tx_request <= 1;
-        else if(cmd_addr == cmd_btn)
-          buttons <= cmd_data;
+        case (cmd_addr)
+
+          cmd_leds :
+          begin
+            requested_reg <= leds;
+            tx_request <= 1;
+          end
+
+          cmd_display :
+          begin
+            requested_reg <= display;
+            tx_request <= 1;
+          end
+
+          cmd_btn :
+          begin
+            buttons <= cmd_data;
+            tx_request <= 0;
+          end
+          default:
+            tx_request <= 0;
+        endcase
       end
       else
         tx_request <= 0;
@@ -79,7 +99,7 @@ module violet #(parameter BAUD_DIV=128)
           if(tx_request)
           begin
             currentState <= state_tx;
-            out_reg <= leds;
+            out_reg <= requested_reg;
             bytes_to_send <= 2;
           end
           else

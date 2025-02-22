@@ -29,12 +29,10 @@ module top_violet_example(
   localparam clock_freq = 25000000; // input clock frequency in Hz
   localparam baudrate = 9600; // baud rate
 
-  reg [15:0] leds;
+  reg [15:0] leds, display;
   wire [15:0] buttons;
 
-  violet #(.BAUD_DIV(clock_freq / baudrate)) u_vio(i_clk, rst, leds, buttons, uart_rx, uart_tx);
-
-  // LED chaser
+  violet #(.BAUD_DIV(clock_freq / baudrate)) u_vio(i_clk, rst, leds, display, buttons, uart_rx, uart_tx);
 
   reg [30:0] div_cnt;
 
@@ -46,9 +44,15 @@ module top_violet_example(
       begin
         div_cnt <= 1;
         if(buttons[14])
+        begin
           leds <= {leds[0], leds[15:1]};
+          display <= display - 1;
+        end
         else
+        begin
           leds <= {leds[14:0], leds[15]};
+          display <= display + 1;
+        end
       end
       else
         div_cnt <= div_cnt + 1;
@@ -57,6 +61,7 @@ module top_violet_example(
     begin
       div_cnt <= 1;
       leds <= 1;
+      display <= 0;
     end
   end
 
